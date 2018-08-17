@@ -24,15 +24,7 @@ source $BP_DIR/lib/stdlib.sh
 ### Setup functions
 
 install_sfdx_cli() {
-  log "Downloading Salesforce CLI tarball ..."
-  mkdir sfdx && curl --silent --location "https://developer.salesforce.com/media/salesforce-cli/sfdx-cli/channels/stable/sfdx-cli-linux-x64.tar.xz" | tar xJ -C sfdx --strip-components 1
-
-  log "Copying Salesforce CLI binary ..."
-
-  rm -rf "$BUILD_DIR/vendor/sfdx"
-  mkdir -p "$BUILD_DIR/vendor/sfdx"
-  cp -r sfdx "$BUILD_DIR/vendor/sfdx/cli"
-  chmod -R 755  "$BUILD_DIR/vendor/sfdx/cli"
+  npm install sfdx-cli --global
 }
 
 setup_dirs() {
@@ -53,18 +45,6 @@ debug "BP_DIR: $BP_DIR"
 setup_dirs
 log "Starting CLI installation ..."
 install_sfdx_cli
-
-# Create .profile.d folder
-mkdir -p $BUILD_DIR/.profile.d
-
-# if no .profile.d/path.sh, create one
-if [ ! -f $BUILD_DIR/.profile.d/path.sh ]; then
-  log "Creating path.sh ..."
-  echo "echo \"Updating PATH to include Salesforce CLI ...\"
-export PATH=\$PATH:/app/vendor/sfdx/cli/bin/" > $BUILD_DIR/.profile.d/path.sh
-
-  log "Generated $BUILD_DIR/.profile.d/path.sh to add CLI path"
-fi
 
 header "DONE! Completed in $(($SECONDS - $START_TIME))s"
 exit 0
