@@ -30,7 +30,7 @@ modify_git_config() {
 }
 
 setup_creds() {  
-  export GITHUB_PAT=cat($ENV_DIR/GITHUB_PAT)
+  export GITHUB_PAT=$(cat $ENV_DIR/GITHUB_PAT)
   echo 'echo $GITHUB_PAT' > $BUILD_DIR/.git-askpass
   chmod +x $BUILD_DIR/.git-askpass
   export GIT_ASKPASS=$BUILD_DIR/.git-askpass
