@@ -37,7 +37,7 @@ setup_creds() {
   chmod +x $BUILD_DIR/.git-askpass
 }
 
-header 'Welcome to github-via-pat 8.28.2020 1:03p'
+header 'Welcome to github-via-pat 8.28.2020 1:24p'
 log "Setting up github private repo access via personal access token"
 
 log "Setting up paths ..."
