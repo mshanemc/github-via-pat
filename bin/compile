@@ -23,17 +23,21 @@ source $BP_DIR/lib/stdlib.sh
 
 ### Setup functions
 
-install_sfdx_cli() {
-  npm install sfdx-cli --global
+modify_git_config() {
+  git config --global url."https://api@github.com/".insteadOf "https://github.com/"
+  git config --global url."https://ssh@github.com/".insteadOf "ssh://git@github.com/"
+  git config --global url."https://git@github.com/".insteadOf "git@github.com:"
 }
 
-setup_dirs() {
-  export PATH="$BUILD_DIR/vendor/sfdx/cli/bin:$PATH"
+setup_creds() {  
+  export GITHUB_PAT=cat($ENV_DIR/GITHUB_PAT)
+  echo 'echo $GITHUB_PAT' > $BUILD_DIR/.git-askpass
+  chmod +x $BUILD_DIR/.git-askpass
+  export GIT_ASKPASS=$BUILD_DIR/.git-askpass
 }
 
-header 'Welcome to salesforce-cli-buildpack!'
-log "Exporting environment directories ..."
-export_env "$ENV_DIR"
+header 'Welcome to github-via-pat'
+log "Setting up github private repo access via personal access token"
 
 log "Setting up paths ..."
 
@@ -43,8 +47,10 @@ debug "ENV_DIR: $ENV_DIR"
 debug "BP_DIR: $BP_DIR"
 
 setup_dirs
-log "Starting CLI installation ..."
-install_sfdx_cli
+log "Modifying git config"
+modify_git_config
+log "exporting credentials in environment"
+setup_creds
 
 header "DONE! Completed in $(($SECONDS - $START_TIME))s"
 exit 0
