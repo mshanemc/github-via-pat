@@ -30,12 +30,12 @@ source $BP_DIR/lib/stdlib.sh
 # }
 
 setup_creds() {  
-  log "Access token from envdir is is $(cat $ENV_DIR/GITHUB_PAT)"
+  debug "Access token from envdir is is $(cat $ENV_DIR/GITHUB_PAT)"
   mkdir -p $BUILD_DIR/.profile.d
   cp $BP_DIR/profile/* "$BUILD_DIR/.profile.d/"
   # export "GITHUB_PAT=$(cat $ENV_DIR/GITHUB_PAT)"
   # export PAT_BUILDBACK_TEST=true
-  echo "echo $GITHUB_PAT" > $BUILD_DIR/.git-askpass
+  echo "echo $(cat $ENV_DIR/GITHUB_PAT)" > $BUILD_DIR/.git-askpass
   chmod +x $BUILD_DIR/.git-askpass
 }
 
