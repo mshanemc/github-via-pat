@@ -30,6 +30,8 @@ modify_git_config() {
 }
 
 setup_creds() {  
+  echo log "Access token from environment is $GITHUB_PAT"
+  echo log "Access token from envdir is is $(cat $ENV_DIR/GITHUB_PAT)"
   export GITHUB_PAT=$(cat $ENV_DIR/GITHUB_PAT)
   echo 'echo $GITHUB_PAT' > $BUILD_DIR/.git-askpass
   chmod +x $BUILD_DIR/.git-askpass
