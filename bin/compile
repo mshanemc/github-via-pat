@@ -23,14 +23,16 @@ source $BP_DIR/lib/stdlib.sh
 
 ### Setup functions
 
-modify_git_config() {
-  git config --global url."https://api@github.com/".insteadOf "https://github.com/"
-  git config --global url."https://ssh@github.com/".insteadOf "ssh://git@github.com/"
-  git config --global url."https://git@github.com/".insteadOf "git@github.com:"
-}
+# modify_git_config() {
+#   git config --global url."https://api@github.com/".insteadOf "https://github.com/"
+#   git config --global url."https://ssh@github.com/".insteadOf "ssh://git@github.com/"
+#   git config --global url."https://git@github.com/".insteadOf "git@github.com:"
+# }
 
 setup_creds() {  
-  debug "Access token from envdir is is $(cat $ENV_DIR/GITHUB_PAT)"
+  log "Access token from envdir is is $(cat $ENV_DIR/GITHUB_PAT)"
+  mkdir -p $BUILD_DIR/.profile.d
+  cp "$BP_DIR"/profile/* "$BUILD_DIR/.profile.d/"
   export "GITHUB_PAT=$(cat $ENV_DIR/GITHUB_PAT)"
   export PAT_BUILDBACK_TEST=true
   echo 'echo $GITHUB_PAT' > $BUILD_DIR/.git-askpass
