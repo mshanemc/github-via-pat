@@ -38,7 +38,7 @@ setup_creds() {
   export GIT_ASKPASS=$BUILD_DIR/.git-askpass
 }
 
-header 'Welcome to github-via-pat'
+header 'Welcome to github-via-pat 8.28.2020 12:59p'
 log "Setting up github private repo access via personal access token"
 
 log "Setting up paths ..."
